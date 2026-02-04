@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - Syntaxa IA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0e1a;
+            --bg-darker: #060911;
+            --accent-primary: #00ff88;
+            --accent-secondary: #00d4ff;
+            --accent-tertiary: #ff006e;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a8b8;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        /* Gradient Mesh Animation */
+        .gradient-mesh {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 0, 110, 0.15) 0%, transparent 50%);
+            animation: meshMove 20s ease-in-out infinite;
+        }
+
+        @keyframes meshMove {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(50px, -30px) scale(1.1);
+            }
+            66% {
+                transform: translate(-30px, 50px) scale(0.9);
+            }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .particle:nth-child(1) {
+            width: 4px;
+            height: 4px;
+            left: 10%;
+            top: 20%;
+            animation-delay: 0s;
+            animation-duration: 12s;
+        }
+
+        .particle:nth-child(2) {
+            width: 6px;
+            height: 6px;
+            left: 70%;
+            top: 80%;
+            animation-delay: 2s;
+            animation-duration: 15s;
+            background: var(--accent-secondary);
+        }
+
+        .particle:nth-child(3) {
+            width: 3px;
+            height: 3px;
+            left: 40%;
+            top: 40%;
+            animation-delay: 4s;
+            animation-duration: 10s;
+        }
+
+        .particle:nth-child(4) {
+            width: 5px;
+            height: 5px;
+            left: 90%;
+            top: 30%;
+            animation-delay: 1s;
+            animation-duration: 14s;
+            background: var(--accent-tertiary);
+        }
+
+        .particle:nth-child(5) {
+            width: 4px;
+            height: 4px;
+            left: 25%;
+            top: 70%;
+            animation-delay: 3s;
+            animation-duration: 13s;
+        }
+
+        .particle:nth-child(6) {
+            width: 7px;
+            height: 7px;
+            left: 60%;
+            top: 15%;
+            animation-delay: 5s;
+            animation-duration: 11s;
+            background: var(--accent-secondary);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.3;
+            }
+            25% {
+                transform: translate(100px, -100px) scale(1.5);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translate(-50px, 150px) scale(0.8);
+                opacity: 0.2;
+            }
+            75% {
+                transform: translate(150px, 50px) scale(1.2);
+                opacity: 0.5;
+            }
+        }
+
+        /* Wave Animation */
+        .wave-container {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            width: 200%;
+            height: 100%;
+            animation: wave 15s linear infinite;
+        }
+
+        .wave:nth-child(1) {
+            opacity: 0.1;
+            animation-delay: 0s;
+        }
+
+        .wave:nth-child(2) {
+            opacity: 0.15;
+            animation-delay: -5s;
+        }
+
+        .wave:nth-child(3) {
+            opacity: 0.2;
+            animation-delay: -10s;
+        }
+
+        @keyframes wave {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .wave path {
+            fill: var(--accent-primary);
+        }
+
+        /* Content */
+        .content {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Header */
+        header {
+            padding: 1.5rem 5%;
+            backdrop-filter: blur(10px);
+            background: rgba(10, 14, 26, 0.8);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .btn-launch {
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border: none;
+            border-radius: 8px;
+            color: var(--bg-dark);
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* Documentation Content */
+        .doc-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 5%;
+        }
+
+        .doc-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .doc-header h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .doc-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        .doc-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        /* Sidebar Navigation */
+        .doc-nav {
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+        }
+
+        .doc-nav ul {
+            list-style: none;
+        }
+
+        .doc-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .doc-nav a {
+            display: block;
+            padding: 0.8rem 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .doc-nav a:hover,
+        .doc-nav a.active {
+            color: var(--accent-primary);
+            border-left-color: var(--accent-primary);
+            background: rgba(0, 255, 136, 0.05);
+        }
+
+        /* Main Documentation */
+        .doc-main {
+            background: rgba(20, 25, 40, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 16px;
+            padding: 3rem;
+        }
+
+        .doc-section {
+            margin-bottom: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .doc-section:last-child {
+            border-bottom: none;
+        }
+
+        .doc-section h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 2rem;
+            color: var(--accent-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .doc-section h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            color: var(--accent-secondary);
+            margin: 2rem 0 1rem;
+        }
+
+        .doc-section p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .doc-section ul {
+            margin-left: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .doc-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .code-example {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+        }
+
+        .code-example pre {
+            color: var(--accent-primary);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .info-box {
+            background: rgba(0, 212, 255, 0.1);
+            border-left: 4px solid var(--accent-secondary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .warning-box {
+            background: rgba(255, 0, 110, 0.1);
+            border-left: 4px solid var(--accent-tertiary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .success-box {
+            background: rgba(0, 255, 136, 0.1);
+            border-left: 4px solid var(--accent-primary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 968px) {
+            .doc-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .doc-nav {
+                position: relative;
+                top: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="gradient-mesh"></div>
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        <div class="wave-container">
+            <svg class="wave" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,50 C300,100 600,0 900,50 C1200,100 1500,0 1800,50 L1800,120 L0,120 Z"></path>
+            </svg>
+            <svg class="wave" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,70 C300,20 600,120 900,70 C1200,20 1500,120 1800,70 L1800,120 L0,120 Z"></path>
+            </svg>
+            <svg class="wave" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,90 C300,40 600,140 900,90 C1200,40 1500,140 1800,90 L1800,120 L0,120 Z"></path>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <header>
+            <nav>
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M 35 20 Q 25 20 25 30 L 25 40 Q 25 45 20 45 Q 25 45 25 50 L 25 70 Q 25 80 35 80" 
+                                  stroke="url(#logoGradient)" stroke-width="4" fill="none" stroke-linecap="round"/>
+                            <path d="M 65 20 Q 75 20 75 30 L 75 40 Q 75 45 80 45 Q 75 45 75 50 L 75 70 Q 75 80 65 80" 
+                                  stroke="url(#logoGradient)" stroke-width="4" fill="none" stroke-linecap="round"/>
+                            <circle cx="40" cy="42" r="2" fill="url(#logoGradient)"/>
+                            <circle cx="40" cy="50" r="2" fill="url(#logoGradient)"/>
+                            <line x1="55" y1="38" x2="65" y2="38" stroke="url(#logoGradient)" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="50" y1="46" x2="65" y2="46" stroke="url(#logoGradient)" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="50" y1="54" x2="65" y2="54" stroke="url(#logoGradient)" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    Syntaxa IA 🚀
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+                    <li><a href="documentation.html">Documentation</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+                <a href="chat.html" class="btn-launch">🚀 Lancer Syntaxa IA</a>
+            </nav>
+        </header>
+
+        <div class="doc-container">
+            <div class="doc-header">
+                <h1>📚 Documentation</h1>
+                <p>✨ Tout ce que vous devez savoir pour utiliser Syntaxa IA 🚀</p>
+            </div>
+
+            <div class="doc-grid">
+                <!-- Navigation Sidebar -->
+                <nav class="doc-nav">
+                    <ul>
+                        <li><a href="#introduction" class="active">📖 Introduction</a></li>
+                        <li><a href="#demarrage">🚀 Démarrage Rapide</a></li>
+                        <li><a href="#api">🔑 Configuration API</a></li>
+                        <li><a href="#fonctionnalites">⚡ Fonctionnalités</a></li>
+                        <li><a href="#exemples">💡 Exemples d'Usage</a></li>
+                        <li><a href="#bonnes-pratiques">✨ Bonnes Pratiques</a></li>
+                        <li><a href="#faq">❓ FAQ</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Main Content -->
+                <div class="doc-main">
+                    <!-- Introduction -->
+                    <section id="introduction" class="doc-section">
+                        <h2>📖 Introduction</h2>
+                        <p>
+                            Syntaxa IA est un assistant de développement intelligent propulsé par OpenAI. 
+                            Il vous aide à coder plus vite, débugger plus efficacement et apprendre de nouvelles technologies.
+                        </p>
+                        <div class="success-box">
+                            <strong>✨ Ce que Syntaxa IA peut faire :</strong>
+                            <ul>
+                                <li>Générer du code dans tous les langages populaires</li>
+                                <li>Débugger et corriger les erreurs</li>
+                                <li>Expliquer des concepts complexes</li>
+                                <li>Optimiser votre code existant</li>
+                                <li>Répondre à vos questions techniques</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Démarrage Rapide -->
+                    <section id="demarrage" class="doc-section">
+                        <h2>🚀 Démarrage Rapide</h2>
+                        <p>Pour commencer à utiliser Syntaxa IA, suivez ces étapes simples :</p>
+                        
+                        <h3>Étape 1 : Obtenir une clé API OpenAI</h3>
+                        <ol>
+                            <li>Créez un compte sur <a href="https://platform.openai.com" style="color: var(--accent-primary);">platform.openai.com</a></li>
+                            <li>Accédez à la section "API Keys"</li>
+                            <li>Créez une nouvelle clé secrète</li>
+                            <li>Copiez et sauvegardez votre clé (elle commence par "sk-")</li>
+                        </ol>
+
+                        <div class="warning-box">
+                            <strong>⚠️ Important :</strong> Ne partagez jamais votre clé API publiquement. Gardez-la confidentielle et sécurisée.
+                        </div>
+
+                        <h3>Étape 2 : Configurer Syntaxa IA</h3>
+                        <ol>
+                            <li>Ouvrez l'interface de chat</li>
+                            <li>Dans la barre latérale, localisez le champ "Clé API OpenAI"</li>
+                            <li>Collez votre clé API</li>
+                            <li>La clé est sauvegardée automatiquement dans votre navigateur</li>
+                        </ol>
+
+                        <h3>Étape 3 : Commencer à utiliser</h3>
+                        <p>C'est tout ! Vous pouvez maintenant poser vos questions ou demander de générer du code.</p>
+                    </section>
+
+                    <!-- Configuration API -->
+                    <section id="api" class="doc-section">
+                        <h2>🔑 Configuration API</h2>
+                        
+                        <h3>Modèles Disponibles</h3>
+                        <p>Syntaxa IA supporte plusieurs modèles OpenAI :</p>
+                        <ul>
+                            <li><strong>GPT-4 Turbo</strong> : Le plus avancé, idéal pour les tâches complexes</li>
+                            <li><strong>GPT-4</strong> : Très performant pour la plupart des tâches</li>
+                            <li><strong>GPT-3.5 Turbo</strong> : Rapide et économique pour les tâches simples</li>
+                        </ul>
+
+                        <div class="info-box">
+                            <strong>💡 Astuce :</strong> Utilisez GPT-3.5 Turbo pour les questions simples et GPT-4 Turbo pour les tâches complexes nécessitant plus de réflexion.
+                        </div>
+
+                        <h3>Gestion des Coûts</h3>
+                        <p>
+                            L'utilisation de l'API OpenAI est payante. Les coûts varient selon le modèle utilisé.
+                            Consultez la <a href="https://openai.com/pricing" style="color: var(--accent-primary);">page de tarification OpenAI</a> pour plus de détails.
+                        </p>
+                    </section>
+
+                    <!-- Fonctionnalités -->
+                    <section id="fonctionnalites" class="doc-section">
+                        <h2>⚡ Fonctionnalités</h2>
+
+                        <h3>Génération de Code</h3>
+                        <p>Demandez à Syntaxa IA de créer du code pour vous :</p>
+                        <div class="code-example">
+                            <pre>Exemple de prompt :
+"Crée-moi une fonction Python qui trie une liste de dictionnaires 
+par ordre alphabétique selon une clé spécifique"</pre>
+                        </div>
+
+                        <h3>Debugging</h3>
+                        <p>Collez votre code avec l'erreur et demandez de l'aide :</p>
+                        <div class="code-example">
+                            <pre>Exemple de prompt :
+"Debug ce code :
+[votre code ici]
+
+J'obtiens l'erreur : [message d'erreur]"</pre>
+                        </div>
+
+                        <h3>Explications</h3>
+                        <p>Obtenez des explications claires sur n'importe quel concept :</p>
+                        <div class="code-example">
+                            <pre>Exemple de prompt :
+"Explique-moi comment fonctionne l'asynchrone en JavaScript 
+avec des exemples pratiques"</pre>
+                        </div>
+
+                        <h3>Optimisation</h3>
+                        <p>Améliorez les performances de votre code :</p>
+                        <div class="code-example">
+                            <pre>Exemple de prompt :
+"Optimise ce code pour qu'il soit plus rapide et efficace :
+[votre code ici]"</pre>
+                        </div>
+                    </section>
+
+                    <!-- Exemples d'Usage -->
+                    <section id="exemples" class="doc-section">
+                        <h2>💡 Exemples d'Usage</h2>
+
+                        <h3>Création d'un Script Python</h3>
+                        <div class="code-example">
+                            <pre>Vous : "Crée un script Python qui extrait tous les emails d'un fichier texte"
+
+Syntaxa IA : [génère le code complet avec explications]</pre>
+                        </div>
+
+                        <h3>Apprentissage d'une Nouvelle Technologie</h3>
+                        <div class="code-example">
+                            <pre>Vous : "Je veux apprendre React. Crée-moi un composant simple 
+de compteur avec explication"
+
+Syntaxa IA : [crée le composant et explique chaque partie]</pre>
+                        </div>
+
+                        <h3>Résolution de Problèmes</h3>
+                        <div class="code-example">
+                            <pre>Vous : "Comment implémenter un système de cache simple en Node.js ?"
+
+Syntaxa IA : [explique les concepts et fournit du code]</pre>
+                        </div>
+                    </section>
+
+                    <!-- Bonnes Pratiques -->
+                    <section id="bonnes-pratiques" class="doc-section">
+                        <h2>✨ Bonnes Pratiques</h2>
+
+                        <h3>Formuler des Questions Claires</h3>
+                        <p>Plus votre question est précise, meilleure sera la réponse :</p>
+                        <ul>
+                            <li>✅ "Crée une fonction JavaScript qui valide un email avec regex"</li>
+                            <li>❌ "Comment valider des trucs ?"</li>
+                        </ul>
+
+                        <h3>Fournir du Contexte</h3>
+                        <p>Donnez des détails sur votre projet :</p>
+                        <div class="code-example">
+                            <pre>Bon exemple :
+"Je développe une application React qui doit afficher des utilisateurs.
+J'ai besoin d'un composant qui fetch les données depuis une API REST 
+et les affiche dans un tableau avec pagination."</pre>
+                        </div>
+
+                        <h3>Itération et Raffinement</h3>
+                        <p>N'hésitez pas à demander des modifications :</p>
+                        <ul>
+                            <li>"Peux-tu ajouter la gestion des erreurs ?"</li>
+                            <li>"Rends ce code plus lisible avec des commentaires"</li>
+                            <li>"Optimise cette fonction pour de grandes quantités de données"</li>
+                        </ul>
+
+                        <div class="success-box">
+                            <strong>✨ Pro Tip :</strong> Utilisez la conversation de manière itérative. 
+                            Commencez simple puis ajoutez des fonctionnalités progressivement.
+                        </div>
+                    </section>
+
+                    <!-- FAQ -->
+                    <section id="faq" class="doc-section">
+                        <h2>❓ Questions Fréquentes</h2>
+
+                        <h3>Syntaxa IA stocke-t-il mes conversations ?</h3>
+                        <p>
+                            Non, toutes les conversations sont stockées localement dans votre navigateur. 
+                            Seules les requêtes à l'API OpenAI sont transmises, et OpenAI ne conserve pas 
+                            vos données si vous utilisez votre propre clé API.
+                        </p>
+
+                        <h3>Puis-je utiliser Syntaxa IA sans connexion internet ?</h3>
+                        <p>
+                            Non, une connexion internet est nécessaire pour communiquer avec l'API OpenAI.
+                        </p>
+
+                        <h3>Quelle est la limite de tokens ?</h3>
+                        <p>
+                            Syntaxa IA est configuré pour utiliser jusqu'à 2000 tokens par réponse. 
+                            Cela permet d'obtenir des réponses détaillées tout en maîtrisant les coûts.
+                        </p>
+
+                        <h3>Comment puis-je sauvegarder mes conversations ?</h3>
+                        <p>
+                            Utilisez le bouton "📋 Copier" dans l'en-tête du chat pour copier toute 
+                            la conversation dans votre presse-papier.
+                        </p>
+
+                        <h3>Syntaxa IA peut-il exécuter du code ?</h3>
+                        <p>
+                            Non, Syntaxa IA génère uniquement du code. Il ne l'exécute pas. 
+                            Vous devez copier le code et l'exécuter dans votre environnement de développement.
+                        </p>
+
+                        <div class="info-box">
+                            <strong>📚 Besoin d'aide ?</strong><br>
+                            Si vous avez d'autres questions, n'hésitez pas à les poser directement à Syntaxa IA !
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
